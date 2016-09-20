@@ -1,0 +1,2 @@
+*** Variables ***
+${ext_tool_highlight button}    //i[@class="annotator-icon-highlight"]

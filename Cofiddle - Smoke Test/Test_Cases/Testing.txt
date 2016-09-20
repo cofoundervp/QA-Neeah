@@ -1,0 +1,58 @@
+*** Settings ***
+Test Teardown     Close Browser
+Library           ExtendedSelenium2Library
+Resource          ../Variables/global_variables.txt    # load the global variables file
+Resource          ../Interfaces/Homepage.txt
+Resource          ../Keywords/checking_keywords.txt
+Resource          ../Keywords/generals_keywords.txt
+Resource          ../Variables/global_variables.txt
+Library           String
+Library           string
+Resource          ../Interfaces/entrance_page.txt
+Resource          ../Interfaces/signup_page.txt
+Resource          ../Interfaces/web_journal_page.txt
+Resource          ../Interfaces/login_page.txt
+Resource          ../Interfaces/settings_page.txt
+Resource          ../Keywords/setup.txt
+Resource          ../Keywords/gmail.txt
+
+*** Test Cases ***
+TM001_TC019_Verify user can cancel at the step chosing Google account.
+    [Documentation]    TM001_TC019_Verify user can cancel at the step chosing Google account.
+    [Tags]    test
+    open cofiddle
+    # Go to "Entrance page" by clicking on "Create free account" button on top right corner.
+    Click Element    ${homepage_signup button}
+    Click Element    ${entrance_sign up with google button}
+    Select Window    Sign in - Google Accounts
+    Wait Until Element Is Visible    ${gg_email txt field}
+    Input Text    ${gg_email txt field}    ${gb_gg_email}
+    Click Element    ${gg_next btn}
+    Wait Until Element Is Visible    ${gg_signin btn}
+    Close Window
+    Select Window    Cofiddle
+    Wait Until Element Is Visible    ${entrance_sign up with email button}
+    Element Should Be Visible    ${entrance_sign up with email button}
+
+TM001_TC020_verify user can sign up with Google account.
+    [Documentation]    TM001_TC020_verify user can sign up with Google account.
+    [Tags]    test
+    open cofiddle
+    Click Element    ${homepage_signup button}
+    Click Element    ${entrance_sign up with google button}
+    Select Window    Sign in - Google Accounts
+    Input Text    ${gg_email txt field}    ${gb_gg_email}
+    Click Element    ${gg_next btn}
+    Input Text    ${gg_password txt field}    ${gb_gg_password}
+    ${temp}    List Windows
+    Click Element    ${gg_signin btn}
+    Select Window    Cofiddle - History
+    sleep    5s    # sleep to wait for Google login process
+    Element Should Be Visible    ${wj_left panel_recent}
+
+test
+    [Tags]    test
+    [Setup]    setup browser with extension_create account_close all ftue
+    Go to    http://adage.com/
+    @{url}    Get All Links
+    Goto    @{url}[1]
