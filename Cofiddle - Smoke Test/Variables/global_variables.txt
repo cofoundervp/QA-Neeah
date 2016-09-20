@@ -1,5 +1,5 @@
 *** Variables ***
-${CHECKPOINT_COUNT}    0
+${CHECKPOINT_COUNT}    2
 ${environment}    staging
 ${extension build path}    E:\\Selenium - Cofiddle\\Extension build
 ${gb_email}       ${EMPTY}
