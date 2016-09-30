@@ -9,7 +9,7 @@ ${setting_profile_first name field}    //input[@id="firstName"]
 ${setting_profile_last name field}    //input[@id="lastName"]
 ${setting_profile_primary email field}    //span[@id="primaryEmail"]
 ${setting_username on top bar}    //div[@id='dropdown-list']/span
-${setting_updated notification}    //div[@id="cofiddle-notification" and contains(text(),'Settings updated')]
+${setting_updated notification}    //div[@class="cofiddle-notification" and contains(text(),'Settings updated')]
 ${setting_profile_change password link}    //label[contains(text(),'Change password?')]
 ${setting_profile_current password field}    //input[@id="currentPassword"]
 ${setting_profile_new password field}    //input[@id="newPassword"]

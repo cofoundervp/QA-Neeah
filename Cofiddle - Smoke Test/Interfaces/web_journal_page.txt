@@ -1,6 +1,6 @@
 *** Variables ***
 ${wj_welcome popup}    //div[@class="ftue-header-dialog" and contains(text(),'Welcome to Cofiddle')]
-${wj_close popup icon}    //i[@class="close icon"]
+${wj_close popup icon}    //div[@id="ftue"]/div/i[@class="close icon"]
 ${wj_left panel_recent}    //label[@data-i18n="STR_LABEL_RECENT_DISCUSS" and contains(text(),'Recent')]
 ${wj_left panel_shared}    //label[@data-i18n="STR_LABEL_SHARED" and contains(text(),'Shared')]
 ${wj_left panel_favorites}    //label[@data-i18n="STR_LABEL_FAVORITES" and contains(text(),'Favorites')]
