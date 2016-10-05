@@ -1,0 +1,676 @@
+*** Settings ***
+Test Teardown     Close Browser
+Resource          ../Keywords/resource_config.txt
+
+*** Test Cases ***
+TM001_TC001_Verify Home page can be opened
+    [Documentation]    Open Coffiddle homepage at: http://staging.neeah.cvp.io/
+    ...
+    ...    Verify homepage is opened by the present of:
+    ...
+    ...    + "GET STARTED TODAY" button
+    ...
+    ...    + Sign up button
+    ...
+    ...    + Sign in button
+    [Tags]    sanity
+    open cofiddle
+    ${tc_flag}    Set Variable    False
+    # verify get started today button is shown
+    Element Should Be Visible    ${homepage_get started today button}
+    # verify sign in button is shown
+    Element Should Be Visible    ${homepage_signin button}
+    # verify sign up button is shown
+    Element Should Be Visible    ${homepage_signup button}
+
+TM001_TC002_Verify Entrance page displays when clicking on "Get started today" button on Home page.
+    [Documentation]    Verify the url has entrance_page text
+    [Tags]    sanity
+    open cofiddle
+    # click "get started today" button on home page
+    Click Element    ${homepage_get started today button}
+    # get current URL
+    ${url}    Get Location
+    # get the text from the right to the first / symbol
+    ${tc_checkpoint}    String.Fetch From Right    ${url}    /
+    # test case is passed if the text get in previous step = "entrance_page"
+    Should Be Equal    ${tc_checkpoint}    entrance_page
+
+TM001_TC003_Verify all links and buttons in Entrance page work fine, redirect to correct pages, no broken.
+    [Documentation]    Verify point:
+    ...
+    ...    -- Click logo and verify home page is opened
+    ...
+    ...    -- Click sign up with email, verify sign up form is opened
+    ...
+    ...    -- Click sign in, verify sign in form is opened
+    ...
+    ...    We do not verify "sign up with Google" by automation. Please do it manually
+    [Tags]    sanity
+    open cofiddle
+    # click "get started today" button on home page
+    Click Element    ${homepage_get started today button}
+    # wait neeah logo is available then click on the logo
+    Wait Until Element Is Visible    ${entrance_neeah logo}
+    Click Element    ${entrance_neeah logo}
+    # check if the current URL is the home page
+    ${tc_checkpoint}    Get Location
+    Should Be Equal    ${tc_checkpoint}    https://${environment}.neeah.cvp.io/
+    # click Back button on Firefox to go back to entrance page
+    Go Back
+    #wait until sign up with email button is availabe and click it
+    Wait Until Element Is Visible    ${entrance_sign up with email button}
+    Click Element    ${entrance_sign up with email button}
+    # check if the current URL is sign up with email page
+    ${tc_checkpoint}    Get Location
+    Should Be Equal    ${tc_checkpoint}    https://${environment}.neeah.cvp.io/app/signup
+    # click Back button on Firefox to go back to entrance page
+    Go Back
+    #wait until login button is available and click it
+    Wait Until Element Is Visible    ${entrance_login button}
+    Click Element    ${entrance_login button}
+    #check if the current URL is login page
+    ${tc_checkpoint}    Get Location
+    Should Be Equal    ${tc_checkpoint}    https://${environment}.neeah.cvp.io/app/signin
+
+TM001_TC004_Verify proper and friendly error message shows when user registers with invalid information.
+    [Documentation]    Verify point:
+    ...
+    ...    -- Error message about required fields are shown and correct: last name, first name, email, password, confirm password
+    ...
+    ...    -- Error message about invalid email format is shown and correct
+    ...
+    ...    -- Error message about invalid password format is shown and correct
+    ...
+    ...    -- Error message about invalid confirm password is shown and correct
+    ...
+    ...    -- Error popup about email has already registered is shown and correct
+    ...
+    ...    We do not verify "sign up with Google" by automation. Please do it manually
+    open cofiddle
+    # open Entrance page
+    Click Element    ${homepage_signup button}
+    Wait Until Element Is Visible    ${entrance_sign up with email button}
+    # open Sign Up form
+    Click Element    ${entrance_sign up with email button}
+    # click Sign Up button to get first error
+    Click Element    ${su_sign up button}
+    # VP1: error message of last name should be shown, and the error is about required field
+    Element Should Be Visible    ${su_error text location of last name}
+    Element Text Should Be    ${su_error text location of last name}    'Last Name' is a required field
+    # input value to last name field
+    ${tc_last name}    generate text    6
+    Input Text    ${su_lastname}    ${tc_last name}
+    # click Sign up button and verify error is dismissed
+    Click Element    ${su_sign up button}
+    Element Should Not Be Visible    ${su_error text location of last name}
+    # click Sign up button again to get next error
+    Click Element    ${su_sign up button}
+    # VP2: error message of first name should be shown, and the error is about required field
+    Element Should Be Visible    ${su_error text location of name}
+    Element Text Should Be    ${su_error text location of name}    'First name' is a required field
+    # input value to first name field
+    ${tc_first name}    generate text    6
+    Input Text    ${su_name}    ${tc_first name}
+    # click sign up button to dismiss error
+    Click Element    ${su_sign up button}
+    Element Should Not Be Visible    ${su_error text location of name}
+    # click sign up button again to get next error
+    Click Element    ${su_sign up button}
+    # VP3: error message of email should be shown, and the error is about required field
+    Element Should Be Visible    ${su_error text location of email}
+    Element Text Should Be    ${su_error text location of email}    'Email' is a required field
+    # input invalid email format to email field
+    ${tc_email}    generate text    6
+    Input Text    ${su_email}    ${tc_email}
+    # VP4: verify error about invalid email is shown
+    Click Element    ${su_sign up button}
+    Element Text Should Be    ${su_error text location of email}    'Email' is not valid
+    # input valid email to email field
+    ${tc_email}    generate email    15
+    Input Text    ${su_email}    ${tc_email}
+    # VP5: verify error of password is shown and it is about required field
+    Click Element    ${su_sign up button}
+    Element Should Not Be Visible    ${su_error text location of email}
+    Element Should Be Visible    ${su_error text location of password}
+    Element Text Should Be    ${su_error text location of password}    'Current password' is a required field
+    # INPUT INVALID PASSWORD FORMAT
+    # input password lower than 6 characters and all lower case
+    Input Text    ${su_password}    abcde
+    Click Element    ${su_sign up button}
+    # VP6: verify error of password is shown, and it is about invalid password format
+    Element Should Be Visible    ${su_error text location of password}
+    Element Text Should Be    ${su_error text location of password}    Passwords need to be at least 6 characters, with at least one uppercase character and one number
+    # input password lower than 6 characters and all upper case
+    Input Text    ${su_password}    ABCDE
+    Click Element    ${su_sign up button}
+    # VP7: verify error of password is shown, and it is about invalid password format
+    Element Should Be Visible    ${su_error text location of password}
+    Element Text Should Be    ${su_error text location of password}    Passwords need to be at least 6 characters, with at least one uppercase character and one number
+    # input password with 6 characters but no number, no upper case
+    Input Text    ${su_password}    abcdef
+    Click Element    ${su_sign up button}
+    # VP8: verify error of password is shown, and it is about invalid password format
+    Element Should Be Visible    ${su_error text location of password}
+    Element Text Should Be    ${su_error text location of password}    Passwords need to be at least 6 characters, with at least one uppercase character and one number
+    # input password with 6 characters, contains upper case, but no number
+    Input Text    ${su_password}    Abcdef
+    Click Element    ${su_sign up button}
+    # VP8: verify error of password is shown, and it is about invalid password format
+    Element Should Be Visible    ${su_error text location of password}
+    Element Text Should Be    ${su_error text location of password}    Passwords need to be at least 6 characters, with at least one uppercase character and one number
+    # input password with 6 characters, only number
+    Input Text    ${su_password}    123456
+    Click Element    ${su_sign up button}
+    # VP9: verify error of password is shown, and it is about invalid password format
+    Element Should Be Visible    ${su_error text location of password}
+    Element Text Should Be    ${su_error text location of password}    Passwords need to be at least 6 characters, with at least one uppercase character and one number
+    # input valid password to password field
+    Input Text    ${su_password}    Abc123
+    # Click sign up button to dismiss error of password and verify it is dismissed
+    Click Element    ${su_sign up button}
+    Element Should Not Be Visible    ${su_error text location of password}
+    # click sign up button again to get next error
+    Click Element    ${su_sign up button}
+    Element Should Be Visible    ${su_error text location of confirm password}
+    Element Text Should Be    ${su_error text location of confirm password}    'Confirm password' is a required field
+    #input a not matched password to confirm field
+    Input Text    ${su_confirmpassword}    123Abc
+    Click Element    ${su_sign up button}
+    # VP: verify not matched error is shown
+    Element Should Be Visible    ${su_error text location of confirm password}
+    Element Text Should Be    ${su_error text location of confirm password}    'Password' and 'Confirm password' do not match
+    # input matched password to confirm field
+    Input Text    ${su_confirmpassword}    Abc123
+    # input an existing email address to email field
+    Input Text    ${su_email}    tu.duongcvp+62416@gmail.com
+    # click sign up button to trigger popup
+    Click Element    ${su_sign up button}
+    Element Should Be Visible    ${su_error popup}
+    Element Text Should Be    ${su_error popup}    The email address you've entered is already in use. Please enter a new address or click here to login
+
+TM001_TC005_Verify user can register a new account with an email address.
+    [Documentation]    Verify point:
+    ...
+    ...    [NO EXTENSION]
+    ...
+    ...    -- Welcome popup is displayed after user signs up
+    [Tags]    sanity
+    open cofiddle
+    # open Entrance page
+    Click Element    ${homepage_signup button}
+    Wait Until Element Is Visible    ${entrance_sign up with email button}
+    # open Sign Up form
+    Click Element    ${entrance_sign up with email button}
+    # input valid value to all fields
+    ${tc_first name}    generate text    5
+    Input Text    ${su_name}    ${tc_first name}
+    ${tc_last name}    generate text    5
+    Input Text    ${su_lastname}    ${tc_last name}
+    ${tc_email}    generate email    30
+    Input Text    ${su_email}    ${tc_email}
+    Input Text    ${su_password}    Abc123
+    Input Text    ${su_confirmpassword}    Abc123
+    # click sign up button
+    Click Element    ${su_sign up button}
+    Element Should Be Visible    ${wj_welcome popup}
+
+TM001_TC006_NoExtension_Verify FTUE starts after registering new account.
+    [Documentation]    Verify points:
+    ...
+    ...    [NO EXTENSION]
+    ...
+    ...    -- Recent page: logo, download link, texts are presented and corrected
+    ...
+    ...    -- Shared page: logo, texts are presented and corrected
+    ...
+    ...    -- Favorites page: logo, texts are presents and corrected
+    ...
+    ...    -- Annotateed page: logo, texts are presents and corrected
+    ...
+    ...    -- Tags page: logo, texts are presents and corrected
+    ...
+    ...    -- Recent page when there is no extension: logo and texts are presented and corrected
+    open cofiddle
+    create account with email
+    Wait Until Element Is Visible    ${wj_welcome popup}
+    # close welcome popup
+    Click Element    ${wj_close popup icon}
+    Click Element    ${wj_close popup icon}
+    Click Element    ${wj_close popup icon}
+    Click Element    ${wj_close popup icon}
+    # Click to open Recent page
+    Click Element    ${wj_left panel_recent}
+    # verify neeah icon is shown
+    Element Should Be Visible    ${wj_r_neeah icon}
+    # VERIFY TEXT OF FTUE RECENT
+    # verify text of header
+    Element Text Should Be    ${wj_r_header}    Your Web Journal is empty. To start filling it:
+    # get real locator of paragraph 1
+    ${tc_p}    Replace String    ${wj_r_ftue paragraph_locator}    number    1
+    # verify text of paragraph 1
+    Element Text Should Be    ${tc_p}    1. Download extension\n (just like Dropbox, Evernote and other popular apps, Cofiddle uses a browser extension to help you store your cool web finds into your Web journal)
+    # get real locator of paragraph 2
+    ${tc_p}    Replace String    ${wj_r_ftue paragraph_locator}    number    2
+    # verify text of paragraph 2
+    Element Text Should Be    ${tc_p}    2. One you download the extension, pages are added to your Web journal simply by viewing a web page from a new tab in your Chrome browser
+    # get real locator of paragraph 3
+    ${tc_p}    Replace String    ${wj_r_ftue paragraph_locator}    number    3
+    # verify text of paragraph 3
+    Element Text Should Be    ${tc_p}    or
+    # get real locator of paragraph 3
+    ${tc_p}    Replace String    ${wj_r_ftue paragraph_locator}    number    4
+    # verify text of paragraph 4
+    Element Text Should Be    ${tc_p}    3. Visit a web page by doing a search using the Cofiddle search bar above
+    # verify download extension link is available
+    Element Should Be Visible    ${wj_r_download link}
+    # VERIFY TEXT OF FTUE SHARED
+    # click to open Shared tab
+    Click Element    ${wj_left panel_shared}
+    Element Should Be Visible    ${wj_s_bell icon}
+    Element Text Should Be    //span[@class="ftue-header"]    Your Shared are empty
+    Element Text Should Be    //p[@data-i18n="STR_FUTE_VER3_ALERTS_2"]    When someone replies with a comment to a web page you shared with them, you will see it here.
+    # VERIFY TEXT OF FTUE FAVORITES
+    # click to open Favorites tab
+    Click Element    ${wj_left panel_favorites}
+    Element Should Be Visible    //i[@class="fa fa-plus fa-2x"]    # verify plus icon is shown
+    Element Should Be Visible    //i[@class="icon-ftue fa fa-star fa-1x"]    # verify star icon is shown
+    Element Text Should Be    //div[@id='history-content']/div[3]/div[2]/span[2]/b    Your favorites are empty until you use within the Web Journal/Recent
+    # VERIFY TEXT OF FTUE ANNOTATES
+    # click to open Favorites tab
+    Click Element    ${wj_left panel_annotated}
+    Element Should Be Visible    //i[@class="fa fa-edit fa-2x"]    # verify edit icon is shown
+    Element Text Should Be    //div[@id='history-content']/div[3]/div[3]/span[2]    This is empty until you've highlighted or annotated some pages
+    # VERIFY TEXT OF FTUE ANNOTATES
+    Click Element    ${wj_left panel_tags}    # open tags
+    Element Should Be Visible    //i[@class="fa fa-tag fa-2x"]
+    Element Text Should Be    css=div.ftue-tag.ftue-body > span.ftue-header    You Don't have any Tags yet...
+    Element Text Should Be    //div[@id='history-content']/div[3]/div[4]/p[1]    Tags are a way to organize your web journal (the web pages you've seen). Assign one or multiple tags to a web page.
+    Element Text Should Be    //div[@id='history-content']/div[3]/div[4]/p[2]    You can automatically share tags with a person or several people to share cool finds for things like vacations, competitive analysis or recipes.
+
+TM001_TC007_WithExtension_Verify FTUE starts after registering new account.
+    [Documentation]    Verify points:
+    ...
+    ...    [EXTENSION ADDED]
+    ...
+    ...    -- Recent page: logo, download link, texts are presented and corrected
+    ...
+    ...    -- Shared page: logo, texts are presented and corrected
+    ...
+    ...    -- Favorites page: logo, texts are presents and corrected
+    ...
+    ...    -- Annotateed page: logo, texts are presents and corrected
+    ...
+    ...    -- Tags page: logo, texts are presents and corrected
+    ...
+    ...    -- Recent page when there is no extension: logo and texts are presented and corrected
+    open cofiddle with extensions
+    create account with email
+    Wait Until Element Is Visible    ${wj_welcome popup}
+    # close welcome popup
+    Click Element    ${wj_close popup icon}
+    Click Element    ${wj_close popup icon}
+    Click Element    ${wj_close popup icon}
+    Click Element    ${wj_close popup icon}
+    # Click to open Recent page
+    Click Element    ${wj_left panel_recent}
+    # verify neeah icon is shown
+    Element Should Be Visible    //i[@class="icon-ftue fa fa-chrome fa-2x"]
+    # VERIFY TEXT OF FTUE RECENT
+    # verify text of header
+    Element Text Should Be    //div[@id='have-extension']/div[2]/span    Your Web Journal is empty. To start filling it:
+    Element Text Should Be    //p[@data-i18n="STR_FUTE_VER3_RECENT_2"]    Visit a web page from a new Chrome browser tab and the page is added to your Web journal
+    Element Text Should Be    //div[@id='have-extension']/div[2]/p[2]/span    or
+    Element Text Should Be    //p[@data-i18n="STR_FUTE_VER3_RECENT_3"]    Visit a web page by doing a search using the Cofiddle search bar above
+    # VERIFY TEXT OF FTUE SHARED
+    # click to open Shared tab
+    Click Element    ${wj_left panel_shared}
+    Element Should Be Visible    ${wj_s_bell icon}
+    Element Text Should Be    //span[@class="ftue-header"]    Your Shared are empty
+    Element Text Should Be    //p[@data-i18n="STR_FUTE_VER3_ALERTS_2"]    When someone replies with a comment to a web page you shared with them, you will see it here.
+    # VERIFY TEXT OF FTUE FAVORITES
+    # click to open Favorites tab
+    Click Element    ${wj_left panel_favorites}
+    Element Should Be Visible    //i[@class="fa fa-plus fa-2x"]    # verify plus icon is shown
+    Element Should Be Visible    //i[@class="icon-ftue fa fa-star fa-1x"]    # verify star icon is shown
+    Element Text Should Be    //div[@id='history-content']/div[3]/div[2]/span[2]/b    Your favorites are empty until you use within the Web Journal/Recent
+    # VERIFY TEXT OF FTUE ANNOTATES
+    # click to open Favorites tab
+    Click Element    ${wj_left panel_annotated}
+    Element Should Be Visible    //i[@class="fa fa-edit fa-2x"]    # verify edit icon is shown
+    Element Text Should Be    //div[@id='history-content']/div[3]/div[3]/span[2]    This is empty until you've highlighted or annotated some pages
+    # VERIFY TEXT OF FTUE ANNOTATES
+    Click Element    ${wj_left panel_tags}    # open tags
+    Element Should Be Visible    //i[@class="fa fa-tag fa-2x"]
+    Element Text Should Be    css=div.ftue-tag.ftue-body > span.ftue-header    You Don't have any Tags yet...
+    Element Text Should Be    //div[@id='history-content']/div[3]/div[4]/p[1]    Tags are a way to organize your web journal (the web pages you've seen). Assign one or multiple tags to a web page.
+    Element Text Should Be    //div[@id='history-content']/div[3]/div[4]/p[2]    You can automatically share tags with a person or several people to share cool finds for things like vacations, competitive analysis or recipes.
+
+TM001_TC008_Verify user can go through new FTUE by clicking X button
+    [Documentation]    Verify points:
+    ...
+    ...    [NO EXTENSION]
+    ...
+    ...    -- Header text of each step is corrected
+    ...
+    ...    -- Description text of each step is corrected
+    ...
+    ...    -- There is an image in each step
+    ...
+    ...    -- Button with valid button name in each step
+    open cofiddle
+    create account with email
+    Wait Until Element Is Visible    ${wj_welcome popup}
+    # verify text of step 1
+    Element Should Be Visible    ${wj_welcome popup}
+    Element Text Should Be    ${wj_new ftue popup_ftue description}    The easiest way to share on-page highlights and annotations
+    Element Should Be Visible    //img[@class="image-tour"]    # verify image is present, but we could not see the image is loaded or is corrected. Please do it manually
+    Capture Page Screenshot
+    Log    Please check the image is loaded correctly as design. We could not handle it by auto script. Please also refer to the screenshot for quick review    WARN
+    Element Should Be Visible    //input[@id="btnFtueAction" and @value="Let's get started"]
+    # click X button
+    Click Element    ${wj_close popup icon}
+    # verify text of step 2
+    Element Text Should Be    ${wj_new ftue popup_header}    First things first
+    Element Text Should Be    ${wj_new ftue popup_ftue description}    Download the Cofiddle browser extension. This is essential and puts the power of 'on-page' highlighting in your hands. No extension, no highlighting, no annotations, nothing.
+    Element Should Be Visible    //img[@class="image-tour"]    # verify image is present, but we could not see the image is loaded or is corrected. Please do it manually
+    Capture Page Screenshot
+    Log    Please check the image is loaded correctly as design. We could not handle it by auto script    WARN
+    Element Should Be Visible    //input[@id="btnFtueAction" and @value="Click here to download"]
+    # click X button
+    Click Element    ${wj_close popup icon}
+    # verify text of step 3
+    Element Text Should Be    ${wj_new ftue popup_header}    Confirmation
+    Element Text Should Be    ${wj_new ftue popup_ftue description}    Look for the Cofiddle confirmation email in the email used to Sign-up. We need to make sure you’re not a spambot, so confirm your email so you can share your highlights and cool web finds.
+    Element Should Be Visible    //img[@class="image-tour"]    # verify image is present, but we could not see the image is loaded or is corrected. Please do it manually
+    Capture Page Screenshot
+    Log    Please check the image is loaded correctly as design. We could not handle it by auto script    WARN
+    Element Should Be Visible    //input[@id="btnFtueAction" and @value="Next"]
+    # click X button
+    Click Element    ${wj_close popup icon}
+    # verify text of step 4
+    Element Text Should Be    ${wj_new ftue popup_header}    Congrats, easy right? Almost done
+    Element Text Should Be    ${wj_new ftue popup_ftue description}    Now open a new browser tab and visit your favorite website you will see the Cofiddle squirrel icon in the bottom right. Just click the squirrel and you can access on page highlighting, annotation, sharing and favoriting.
+    Element Should Be Visible    //img[@class="image-tour"]    # verify image is present, but we could not see the image is loaded or is corrected. Please do it manually
+    Capture Page Screenshot
+    Log    Please check the image is loaded correctly as design. We could not handle it by auto script    WARN
+    Element Should Be Visible    //input[@id="btnFtueAction" and @value="Try it now"]
+
+TM001_TC009_NoExtensino_Verify user can go through new FTUE by clicking submit button
+    [Documentation]    Verify points:
+    ...
+    ...    [NO EXTENSION]
+    ...
+    ...    -- Header text of each step is corrected (except step 3, we do not verify it in this case)
+    ...
+    ...    -- Description text of each step is corrected (except step 3, we do not verify it in this case)
+    ...
+    ...    -- There is an image in each step (except step 3, we do not verify it in this case)
+    ...
+    ...    -- Button with valid button name in each step (except step 3, we do not verify it in this case)
+    open cofiddle
+    create account with email
+    Wait Until Element Is Visible    ${wj_welcome popup}
+    # verify text of step 1
+    Element Should Be Visible    ${wj_welcome popup}
+    Element Text Should Be    ${wj_new ftue popup_ftue description}    The easiest way to share on-page highlights and annotations
+    Element Should Be Visible    //img[@class="image-tour"]    # verify image is present, but we could not see the image is loaded or is corrected. Please do it manually
+    Capture Page Screenshot
+    Log    Please check the image is loaded correctly as design. We could not handle it by auto script. Please also refer to the screenshot for quick review    WARN
+    Element Should Be Visible    //input[@id="btnFtueAction" and @value="Let's get started"]
+    # click Let's get started button
+    Click Element    ${wj_new ftue popup_submit button}
+    # verify text of step 2
+    Element Text Should Be    ${wj_new ftue popup_header}    First things first
+    Element Text Should Be    ${wj_new ftue popup_ftue description}    Download the Cofiddle browser extension. This is essential and puts the power of 'on-page' highlighting in your hands. No extension, no highlighting, no annotations, nothing.
+    Element Should Be Visible    //img[@class="image-tour"]    # verify image is present, but we could not see the image is loaded or is corrected. Please do it manually
+    Capture Page Screenshot
+    Log    Please check the image is loaded correctly as design. We could not handle it by auto script    WARN
+    Element Should Be Visible    //input[@id="btnFtueAction" and @value="Click here to download"]
+    # click X button, since we could not download extension on Staging
+    Click Element    ${wj_close popup icon}
+    # click Next button on step 3
+    Click Element    ${wj_new ftue popup_submit button}
+    # verify text of step 4
+    Element Text Should Be    ${wj_new ftue popup_header}    Congrats, easy right? Almost done
+    Element Text Should Be    ${wj_new ftue popup_ftue description}    Now open a new browser tab and visit your favorite website you will see the Cofiddle squirrel icon in the bottom right. Just click the squirrel and you can access on page highlighting, annotation, sharing and favoriting.
+    Element Should Be Visible    //img[@class="image-tour"]    # verify image is present, but we could not see the image is loaded or is corrected. Please do it manually
+    Capture Page Screenshot
+    Log    Please check the image is loaded correctly as design. We could not handle it by auto script    WARN
+    Element Should Be Visible    //input[@id="btnFtueAction" and @value="Try it now"]
+
+TM001_TC010_verify new FTUE step 4 show after clicking active URL in email
+    [Documentation]    Verify points:
+    ...
+    ...    [NO EXTENSION]
+    ...
+    ...    -- Header text of new FTUE step 4 is shown
+    ...
+    ...    -- Description text new FTUE step 4 is shown
+    ...
+    ...    -- There is an image
+    ...
+    ...    -- Button with valid button name
+    open cofiddle
+    create account with email
+    Wait Until Element Is Visible    ${wj_welcome popup}
+    # close step 1 and step 2
+    Click Element    ${wj_close popup icon}
+    Click Element    ${wj_close popup icon}    # step 3 is shown after this step
+    Close Browser
+    # open gmail
+    open and login gmail in a new window    ${gb_gg_email}    ${gb_gg_password}
+    open gmail item with specific subject    ${gb_email subject text_Welcome to Cofiddle!}
+    ${tc_temp}    get text    //div/p[2]/a
+    Close Browser
+    Comment    open mailinator inbox    ${gb_email}
+    Comment    # click to open Welcome email
+    Comment    Click Element    //div[@class="innermail ng-binding" and contains(text(),'Welcome to Cofiddle!')]
+    Comment    # get the active URL in welcome email
+    Comment    Select Frame    id=publicshowmaildivcontent
+    Comment    ${tc_temp}    get text    //p[5]
+    Comment    Delete All Cookies
+    Comment    Close Browser
+    Open Browser    ${tc_temp}    gc
+    login    ${gb_email}    Abc123
+    Wait Until Element Is Visible    ${wj_new ftue popup_header}
+    # verify text of step 4
+    Element Text Should Be    ${wj_new ftue popup_header}    Congrats, easy right? Almost done
+    Element Text Should Be    ${wj_new ftue popup_ftue description}    Now open a new browser tab and visit your favorite website you will see the Cofiddle squirrel icon in the bottom right. Just click the squirrel and you can access on page highlighting, annotation, sharing and favoriting.
+    Element Should Be Visible    //img[@class="image-tour"]    # verify image is present, but we could not see the image is loaded or is corrected. Please do it manually
+    Capture Page Screenshot
+    Log    Please check the image is loaded correctly as design. We could not handle it by auto script    WARN
+    Element Should Be Visible    //input[@id="btnFtueAction" and @value="Try it now"]
+
+TM001_TC011_withextension_verify click try it now will open the last visited page in browser history
+    [Documentation]    Verify point:
+    ...
+    ...    -- The URL which is opened after clicking Try It Now button will match the latest visited URL
+    launch chrome with extension
+    # open a web page
+    Go To    ${gb_sample url}
+    Maximize Browser Window
+    # open cofiddle
+    Go To    http://${environment}.neeah.cvp.io/
+    create account with email
+    Wait Until Element Is Visible    ${wj_welcome popup}
+    # skip new FTUE until step 4 shows
+    Click Element    ${wj_close popup icon}
+    Click Element    ${wj_close popup icon}
+    Click Element    ${wj_close popup icon}
+    # click Try it Now button
+    Click Element    ${wj_new ftue popup_submit button}
+    #VP
+    Select Window    new
+    Location Should Be    https://www.techinasia.com/singtel-support-social-impact-startups-program
+
+TM001_TC012_withextension_Verify the blank tab opens if clicking on “Try it now” button on *FTUE_step4* popup while the browser history is empty.
+    [Documentation]    Verify point:
+    ...
+    ...    -- Empty page is opened after clicking Try It Now button
+    open cofiddle with extensions
+    create account with email
+    Wait Until Element Is Visible    ${wj_welcome popup}
+    # skip new FTUE until step 4 shows
+    Click Element    ${wj_close popup icon}
+    Click Element    ${wj_close popup icon}
+    Click Element    ${wj_close popup icon}
+    # click Try it Now button
+    Click Element    ${wj_new ftue popup_submit button}
+    Select Window    new
+    Location Should Be    data:,    # this is the blank page which is created by webdriver
+
+TM001_TC013_Verify FTUE doesn’t show at the next time logging after being marked as Completed.
+    [Documentation]    Verify point:
+    ...
+    ...    -- New FTUE is not shown after skipping all and login again
+    open cofiddle
+    create account with email
+    Wait Until Element Is Visible    ${wj_welcome popup}
+    # skip new FTUE
+    Click Element    ${wj_close popup icon}
+    Click Element    ${wj_close popup icon}
+    Click Element    ${wj_close popup icon}
+    Click Element    ${wj_close popup icon}
+    # sign out
+    log out
+    # open sign in page and login
+    Click Element    ${homepage_signin button}
+    login    ${gb_email}    Abc123
+    sleep    4s    # wait if the new FTUE is shown again
+    # VP
+    Element Should Not Be Visible    ${wj_welcome popup}
+
+TM001_TC014_Verify user cannot sign in with invalid information
+    [Documentation]    Verify points:
+    ...
+    ...    -- Cannot login with both fields blank
+    ...
+    ...    -- Error about required field is correct
+    ...
+    ...    -- Cannot login with password blank
+    ...
+    ...    -- Cannot login with email blank
+    ...
+    ...    -- Cannot login with invalid email, correct pasword
+    ...
+    ...    -- Invalid credentials popup is shown and has valid text
+    ...
+    ...    -- Cannot login with invalid password, correct email
+    Log    Open Cofiddle without extension
+    open cofiddle
+    # open sign in page
+    Log    Open sign in page
+    Click Element    ${homepage_signin button}
+    # leave both fields blank and click Log In button. Verify email required error is shown
+    Log    Leave both fields blank and click log in button
+    Click Element    ${si_login button}
+    Log    Verify error is shown and correct text "'Email' is a required field"
+    Element Should Be Visible    ${si_error text location of email}
+    Element Text Should Be    ${si_error text location of email}    'Email' is a required field
+    # fill an invalid email format and submit
+    Input Text    ${si_email field}    test
+    Click Element    ${si_login button}
+    # verify error email is not valid is shown
+    Element Should Be Visible    ${si_error text location of email}
+    Element Text Should Be    ${si_error text location of email}    'Email' is not valid
+    # input an valid email format, then submit two times to get error of password
+    Input Text    ${si_email field}    cofiddleseleniumtesting123@mailinator.com
+    Click Element    ${si_login button}
+    Click Element    ${si_login button}
+    # verify password required error is shown
+    Element Should Be Visible    ${si_error text location of password}
+    Element Text Should Be    ${si_error text location of password}    'Current password' is a required field
+    # submit form with non-existing email and valid password
+    Input Text    ${si_password field}    Abc123
+    Click Element    ${si_login button}
+    # verify invalid credentials popup is shown
+    Element Should Be Visible    ${si_incorrect email or password popup}
+    Element Text Should Be    ${si_incorrect email or password popup}    Incorrect email or password. Please try again.
+    # click OK to dismiss popup
+    Click Element    ${si_ok button on incorrect credentials popup}
+    # submit form with existing email and invalid password
+    Input Text    ${si_email field}    ${gb_email}
+    Input Text    ${si_password field}    Invalid
+    Click Element    ${si_login button}
+    # verify invalid credentials popup is shown
+    Element Should Be Visible    ${si_incorrect email or password popup}
+    Element Text Should Be    ${si_incorrect email or password popup}    Incorrect email or password. Please try again.
+    # click OK to dismiss popup
+    Click Element    ${si_ok button on incorrect credentials popup}
+    # clear text on email field
+    Clear Element Text    ${si_email field}
+    Click Element    ${si_login button}
+    # verify email required error is shown
+    Element Should Be Visible    ${si_error text location of email}
+    Element Text Should Be    ${si_error text location of email}    'Email' is a required field
+
+TM001_TC015_Verify user can login with valid credential.
+    [Documentation]    Verify point:
+    ...
+    ...    -- User can login sucessfully and see the Recent tab on left side menu
+    [Tags]    sanity
+    open cofiddle
+    # open sign in page
+    Click Element    ${homepage_signin button}
+    # login with valid credentials
+    login    ${gb_email}    Abc123
+    # VP: "Recent" on left side menu can be seen. We accept this is a login success
+    Element Should Be Visible    ${wj_left panel_recent}
+
+TM001_TC016_Verify user can log out after logging in.
+    [Documentation]    Verify point:
+    ...
+    ...    -- User logout success by seeing url: https://staging.neeah.cvp.io/?logout=1
+    [Tags]    sanity
+    open cofiddle
+    # open sign in page
+    Click Element    ${homepage_signin button}
+    # login with valid credentials
+    login    ${gb_email}    Abc123
+    # logout
+    logout
+    # verify log out success
+    Location Should Be    https://staging.neeah.cvp.io/?logout=1
+
+TM001_TC017_Verify user can request password recovery.
+    [Documentation]    Verify point:
+    ...
+    ...    -- User can see message about request reset password success on forgot password page
+    [Tags]    sanity
+    open cofiddle
+    # open login page
+    Click Element    ${homepage_signin button}
+    # open forgot password page
+    Click Element    ${si_forgot password link}
+    Wait Until Element Is Visible    ${fp_forgot your password title}
+    # input an existing email to email field
+    Input Text    ${fp_email field}    ${gb_email}
+    # submit
+    Click Element    ${fp_submit}
+    # verify message mention about forgot password request success
+    Element Should Be Visible    ${fp_message location}
+    Element Text Should Be    ${fp_message location}    You will receive an email from us shortly containing a link with instructions to finish resetting your password
+
+TM001_TC018_Verify user can sign in with new password.
+    [Documentation]    Continue from TC017, user open email and start reset password process.
+    ...
+    ...    Verify point:
+    ...
+    ...    -- User can login with new password
+    [Tags]    sanity
+    open and login gmail in a new window    ${gb_gg_email}    ${gb_gg_password}
+    ${tc_real subject locator}    get real locator of email subject    Password reset request
+    Element Should Be Visible    ${tc_real subject locator}
+    Click Element    ${tc_real subject locator}
+    Click Element    link=click here
+    Select Window    new
+    #input new valid password
+    Input Text    ${rp_password field}    123Abc
+    Input Text    ${rp_confirm password}    123Abc
+    # submit
+    Click Element    ${rp_submit button}
+    Wait Until Element Is Visible    ${si_message reset location}
+    login    ${gb_email}    123Abc
+    # VP: "Recent" on left side menu can be seen. We accept this is a login success
+    Element Should Be Visible    ${wj_left panel_recent}

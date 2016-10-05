@@ -1,0 +1,8 @@
+*** Variables ***
+${gmail_signin_email field}    //input[@id="Email"]
+${gmail_signin_next button}    //input[@id="next"]
+${gmail_signin_password field}    //input[@id="Passwd"]
+${gmail_signin_signin button}    //input[@id="signIn"]
+${gmail_sign in link in gmail home page}    //a[@id="gmail-sign-in"]
+${gmail_first item}    //span[@class="ts"]
+${gmail_item with subject locator}    //span[@class="ts"]/b[contains(text(),'subject')]    # Use this interface by replace the text subject with the real subject

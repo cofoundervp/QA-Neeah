@@ -1,0 +1,42 @@
+*** Variables ***
+${setting_left panel_web journal}    //a[@id="btnSettingGeneral"]
+${setting_left panel_profile}    //a[@id="btnSettingProfile"]
+${setting_left panel_security}    //a[@id="btnSettingsSecurity"]
+${setting_left panel_tags}    //a[@id="btnSettingTags"]
+${setting_left panel_notifications}    //a[@id="btnSettingNotification"]
+${setting_save setting_button}    //button[contains(text(),'Save settings')]
+${setting_profile_first name field}    //input[@id="firstName"]
+${setting_profile_last name field}    //input[@id="lastName"]
+${setting_profile_primary email field}    //span[@id="primaryEmail"]
+${setting_username on top bar}    //div[@id='dropdown-list']/span
+${setting_updated notification}    //div[@class="cofiddle-notification" and contains(text(),'Settings updated')]
+${setting_profile_change password link}    //label[contains(text(),'Change password?')]
+${setting_profile_current password field}    //input[@id="currentPassword"]
+${setting_profile_new password field}    //input[@id="newPassword"]
+${setting_profile_confirm password field}    //input[@id="confirmPassword"]
+${setting_profile_input linked email field}    //div[@id='settingProfile']/div[6]/div[2]/div[2]/div/div/input
+${setting_profile_linked unverified email position}    //span[@class="email-address"]
+${setting_profile_trash button}    //i[@class="fa fa-trash-o"]    # Click this button to remove the first email in linked email section
+${setting_profile_make primary button}    //i[@class="fa fa-key"]    # Click this button will make the first email become primary
+${setting_profile_remove unverify email button}    //i[@class="fa fa fa-mail-reply"]    # Click this button will remove the first unverified email in linked email section
+${setting_profile_unverified text in linked email section}    //span[@class="unverified-text"]
+${setting_security_excluded email text box}    //input[@class="textBlackList"]
+${setting_security_confirm popup_ok button}    //button[@id="alertify-ok"]
+${setting_security_confirm popup_cancel button}    //button[@id="alertify-cancel"]
+${setting_security_excluded remove button}    //i[@class="fa fa-trash-o"]    # This is trash button
+${setting_security_added excluded domain locator}    //a[@data-bind="text:URL" and contains(text(),'exurl')]    # Replace "exurl" with the proper URL
+${setting_security_the first added excluded domain}    //a[@data-bind="text:URL"]
+${setting_web journal_switch auto web journal}    //label[@class="onoffswitch-label" and @for="ckbAutoWebJournal"]
+${setting_web journal_switch auto cache}    //label[@class="onoffswitch-label" and @for="ckbAutoCache"]
+${setting_tags_add tag textbox}    xpath=(//input[@id='txtATag'])[2]
+${setting_tag_first pin button}    //i[@class="fa fa-thumb-tack fa-2x"]
+${setting_tags_first share button}    //i[@class="fa fa-share-alt fa-2x"]
+${setting_tags_first rename button}    //i[@class="fa fa-edit fa-2x"]
+${setting_tags_first trash button}    //i[@class="fa fa-trash-o fa-2x"]
+${setting_tag_first edit tag name textbox}    //input[@class="txtTagName edit-tag-name"]
+${setting_tags_first pinned value container}    //input[@class="hdPin"]
+${setting_tags_first added name tag field}    //label[@class="tag-of-user"]
+${setting_tags_share_email field}    //input[@class="ui-autocomplete-input" and @placeholder="Email"]
+${setting_tags_share_share button}    //input[@id="btnShare"]
+${setting_tags_unshare tag icon}    //a[@class="item"]//i[@class="fa fa-unlink fa-2x tooltip tooltipstered"]
+${setting_tags_new tag text field}    //td[@class="ui input computer only column"]//input[@id="txtATag"]

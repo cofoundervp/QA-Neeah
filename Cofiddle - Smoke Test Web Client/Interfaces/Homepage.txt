@@ -1,0 +1,4 @@
+*** Variables ***
+${homepage_signup button}    //a[@id="hrefSignup"]
+${homepage_signin button}    //a[@id="hrefSignin"]
+${homepage_get started today button}    //a[@id="signup2"]

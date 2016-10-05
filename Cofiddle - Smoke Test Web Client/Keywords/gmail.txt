@@ -1,0 +1,66 @@
+*** Settings ***
+Library           ExtendedSelenium2Library
+Resource          ../Variables/global_variables.txt
+Library           String
+Library           string
+Resource          ../Interfaces/signup_page.txt
+Resource          ../Interfaces/Homepage.txt
+Resource          ../Interfaces/entrance_page.txt
+Resource          ../Interfaces/login_page.txt
+Resource          ../Interfaces/web_journal_page.txt
+Resource          ../Interfaces/settings_page.txt
+Resource          ../Interfaces/gmail.txt
+
+*** Keywords ***
+open and login gmail in the same browser
+    [Arguments]    ${arg_gmail account}    ${arg_gmail password}
+    Go To    https://mail.google.com/
+    sleep    5s
+    # check if gmail return page about.html, user must click Sign in button
+    ${kw_temp}    Get Title
+    Run Keyword If    "${kw_temp}" == "Gmail - Free Storage and Email from Google"    Click Element    //a[contains(text(),"Sign In")]
+    Wait Until Element Is Visible    ${gmail_signin_next button}
+    Comment    #click Sign In in Gmail Home page
+    Comment    Click Element    ${gmail_sign in link in gmail home page}
+    # input email and click next
+    Input Text    ${gmail_signin_email field}    ${arg_gmail account}
+    Click Element    ${gmail_signin_next button}
+    Wait Until Element Is Visible    ${gmail_signin_signin button}
+    # input password and click next
+    Input Text    ${gmail_signin_password field}    ${arg_gmail password}
+    Click Element    ${gmail_signin_signin button}
+    sleep    3s
+    # go to gmail HTML site
+    Go To    https://mail.google.com/mail/?ui=html
+    sleep    2s
+
+open gmail item with specific subject
+    [Arguments]    ${subject}
+    ${kw_real locator of given subject}    get real locator of email subject    ${subject}
+    # click item
+    Click Element    ${kw_real locator of given subject}
+    sleep    3s
+
+get real locator of email subject
+    [Arguments]    ${subject}
+    ${real locator}    Replace String    ${gmail_item with subject locator}    subject    ${subject}
+    [Return]    ${real locator}
+
+open and login gmail in a new window
+    [Arguments]    ${arg_gmail account}    ${arg_gmail password}
+    Open Browser    https://mail.google.com/    ${gb_browser}
+    sleep    5s
+    # check if gmail return page about.html, user must click Sign in button
+    ${kw_temp}    Get Title
+    Run Keyword If    "${kw_temp}" == "Gmail - Free Storage and Email from Google"    Click Element    //a[@id="gmail-sign-in"]
+    Comment    #click Sign In in Gmail Home page
+    Comment    Click Element    ${gmail_sign in link in gmail home page}
+    # input email and click next
+    Input Text    ${gmail_signin_email field}    ${arg_gmail account}
+    Click Element    ${gmail_signin_next button}
+    # input password and click next
+    Input Text    ${gmail_signin_password field}    ${arg_gmail password}
+    Click Element    ${gmail_signin_signin button}
+    sleep    3s
+    # go to gmail HTML site
+    Go To    https://mail.google.com/mail/?ui=html

@@ -1,0 +1,19 @@
+*** Variables ***
+${CHECKPOINT_COUNT}    0
+${environment}    staging
+${extension build path}    E:\\Selenium - Cofiddle\\Extension build
+${gb_email}       ${EMPTY}
+${gb_password}    Abc123
+${gb_gg_email}    cofiddle.qa@gmail.com
+${gb_gg_password}    Cofiddle*123
+${gb_first name}    ${EMPTY}
+${gb_last name}    ${EMPTY}
+${gb_changed password}    123Abc
+${gb_browser}     gc
+${gb_gg_email id}    cofiddle.qa
+${gb_email subject text_email address added}    Email address added
+${gb_email subject text_Welcome to Cofiddle!}    Welcome to Cofiddle!
+${gb_sample_excluded_url}    http://vnexpress.net/
+${gb_sample url}    https://www.techinasia.com/singtel-support-social-impact-startups-program
+${gb_sample tag name}    ${EMPTY}
+${gb_sample url 2}    http://www.theverge.com/circuitbreaker/2016/7/11/12152850/superbook-laptop-shell-android-phone

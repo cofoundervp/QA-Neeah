@@ -1,0 +1,8 @@
+*** Settings ***
+Library           ExtendedSelenium2Library
+
+*** Keywords ***
+verify if the elements is present
+    [Arguments]    ${element}
+    ${kw_flag}    Is Element Visible    ${element}
+    [Return]    ${kw_flag}
