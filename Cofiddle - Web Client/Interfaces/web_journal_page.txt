@@ -1,5 +1,5 @@
 *** Variables ***
-${wj_welcome popup}    //div[@class="ftue-header-dialog" and contains(text(),'Welcome to Cofiddle')]
+${wj_welcome popup}    //div[@id="ftue"]/div[@class="ftue-header-dialog" and contains(text(),'Welcome to Cofiddle')]
 ${wj_close popup icon}    //div[@id="ftue"]/div/i[@class="close icon"]
 ${wj_left panel_recent}    //label[@data-i18n="STR_LABEL_RECENT_DISCUSS" and contains(text(),'Recent')]
 ${wj_left panel_shared}    //label[@data-i18n="STR_LABEL_SHARED" and contains(text(),'Shared')]
@@ -10,10 +10,10 @@ ${wj_r_neeah icon}    //i[@class="icon-neeah"]
 ${wj_r_header}    //div[@id='not-have-extension']/div[2]/span
 ${wj_r_ftue paragraph_locator}    //div[@id='not-have-extension']/div[2]/p[number]
 ${wj_s_bell icon}    //i[@class="fa fa-bell fa-2x"]
-${wj_r_download link}    //a[contains(@href, '#')]
+${wj_r_download link}    //a[@id="install-extension"]
 ${wj_new ftue popup_ftue description}    //div[@class="ftue-description"]
 ${wj_new ftue popup_submit button}    //input[@id="btnFtueAction"]
-${wj_new ftue popup_header}    //div[@class="ftue-header-dialog"]
+${wj_new ftue popup_header}    //div[@id="ftue"]/div[@class="ftue-header-dialog"]
 ${wj_down arrow icon}    //i[@class="fa \ fa-angle-down fa-1x"]    # This is to open the dropdown menu
 ${wj_sign out button}    //div[@id='btnSignOut']
 ${wj_settings button}    //div[@class="item list-menu"]

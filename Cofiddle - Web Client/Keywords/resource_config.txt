@@ -17,5 +17,4 @@ Resource          ../Variables/global_variables.txt
 Resource          ../Interfaces/settings_page.txt
 Resource          ../Keywords/setup.txt
 Resource          ../Keywords/teardown.txt
-Library           AutoItLibrary
 Resource          ../Variables/sample_articles_to_test.txt

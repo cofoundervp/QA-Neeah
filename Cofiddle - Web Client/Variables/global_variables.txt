@@ -1,7 +1,7 @@
 *** Variables ***
 ${CHECKPOINT_COUNT}    0
 ${environment}    staging
-${extension build path}    E:\\Selenium - Cofiddle\\Extension build
+${extension build path}    E:\\4.GitHub\\QA-Neeah\\Cofiddle - Web Client\\Extension build
 ${gb_email}       ${EMPTY}
 ${gb_password}    Abc123
 ${gb_gg_email}    cofiddle.qa@gmail.com

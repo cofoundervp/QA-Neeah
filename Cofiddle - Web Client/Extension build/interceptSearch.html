@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link rel='stylesheet' href='css/intercept.css' />
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel='stylesheet' href='css/font-awesome.css' />
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="script/jquery.js"></script>
+    <script src="script/i18next.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans&subset=vietnamese,latin-ext' rel='stylesheet' type='text/css'>
+
+    <script src="js/libs/config.js"></script>
+    <script src="js/libs/Cookie.js"></script>
+    <script src="js/libs/Search.js"></script>
+    <script src="js/libs/api.js"></script>
+    <script src="js/libs/User.js"></script>
+    <script src="js/libs/utils.js"></script>
+    <script src="js/interceptSearch.js"></script>
+</head>
+<body>
+    <div class="box-wrapper" id="expand">
+        <div class="box">
+            <div class="close-box">
+                <a id="btnCloseBox">
+                    x
+                    <!--<img src="img/close.png" />-->
+                </a>
+            </div>
+            <div class="box-intercept">
+
+            </div>
+        </div>
+        <div id="moreSearch">
+
+        </div>
+    </div>
+    <div id="mini-search" style="display:none">
+        <div id="intercept-mini" >
+            <a id="close-mini">x</a>
+            <a target="_blank" id="number-result"></a>
+        </div>
+    </div>
+</body>
+</html>

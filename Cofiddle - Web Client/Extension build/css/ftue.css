@@ -1,0 +1,141 @@
+﻿#no-support, #support {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    display: none;
+    margin-bottom: 10px;
+}
+.no-support-box{
+    width: 450px;
+    text-align: center;
+    border: 1px solid rgb(251, 136, 68);
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 10%;
+    padding: 20px 10px;
+    background-color: #f6fafe;
+}
+.no-support-title,.support-title {
+    color: rgb(251, 136, 68);
+    font-weight: bold;
+}
+.no-support-content,.support-content{
+    padding: 10px;
+    font-size:0.80em;
+}
+.support-content-3 span,.support-content-2 span{
+    font-weight:bold;
+}
+.no-support-content a,.support-content-3 a{
+    color:#4099ff;
+}
+    .support-content-1,support-content-2 {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 0 30px 0 30px;
+    }
+.support-content-3 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0 106px 0 132px;
+}
+.support-box {
+    width: 440px;
+    text-align: center;
+    display: inline-block;
+    padding: 10px 10px;
+    background-color: #f6fafe;
+    border-left: 1px solid rgb(251, 136, 68);
+    border-right: 1px solid rgb(251, 136, 68);
+    border-top: 1px solid rgb(251, 136, 68);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.support-tour {
+    width: 440px;
+    text-align: center;
+    display: inline-block;
+    padding: 10px 10px;
+    background-color: #fff;
+    border-left: 1px solid rgb(251, 136, 68);
+    border-right: 1px solid rgb(251, 136, 68);
+    border-bottom: 1px solid rgb(251, 136, 68);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.skip-tour{
+    float:left;
+    font-size:0.80em;
+    cursor :pointer;
+    color:#b7b7b7;
+}
+.step-by-tour{
+    float:left;
+    text-align:center;
+    width: 85%
+}
+.step-by-tour-box {
+    margin: 0 auto;
+    width: 50%;
+    margin-right: 80px;
+}
+.current-step {
+    background: rgb(251, 136, 68);
+}
+.next-step{
+    background:#b7b7b7;
+}
+.step-tour-1, .step-tour-2, .step-tour-3, .step-tour-4, .step-tour-5 {
+    height: 15px;
+    width: 15px;
+    border-radius: 100px;
+    float: left;
+    margin-left: 10px;
+}
+/*recent introducin*/
+#recent-intro{
+    position: relative;
+    height: 526px;
+    width: 100%;
+    text-align: center;
+    /* display: none; */
+    position: absolute;
+    z-index: 9999;
+    top: 109px;
+    left: 108px;
+}
+.box-arrow-intro {
+  height: 50px;
+  width: 154px;
+  background: transparent;
+  border-radius: 0px 0px 0px 370px/225px;
+  border: solid 3px rgb(251, 136, 68);
+  border-top: none;
+  border-right: none;
+  margin-top: 180px;
+  right: 222px;
+  z-index: 99999;
+  /* position: absolute; */
+  float: right;
+  position: fixed;
+  -ms-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg)
+}
+    .box-arrow-intro:before {
+        height: 20px;
+        width: 10px;
+        border: 3px solid rgb(251, 136, 68);
+        border-radius: 30px 30px 0px 0px /75px 75px 0px 0px;
+        display: block;
+        content: "";
+        border-bottom: none;
+        position: relative;
+        top: -9px;
+        left: -10px;
+    }
+#div-intro div {
+  display: inline;
+  margin: 0 1em 0 1em;
+  width: 30%;
+}
