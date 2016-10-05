@@ -1,5 +1,0 @@
-*** Settings ***
-Library           ExtendedSelenium2Library
-Resource          ../Variables/global_variables.txt    # load the global variables file
-Resource          ../Interfaces/Homepage.txt
-Resource          ../Keywords/generals_keywords.txt

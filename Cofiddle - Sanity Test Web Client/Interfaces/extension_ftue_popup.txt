@@ -1,2 +1,0 @@
-*** Variables ***
-${ext_ftue_not this page button}    //input[@id="btnNotThisPage"]

@@ -1,5 +1,0 @@
-*** Variables ***
-${gg_email txt field}    id = Email
-${gg_next btn}    id = next
-${gg_password txt field}    id = Passwd
-${gg_signin btn}    //input[@id='signIn']

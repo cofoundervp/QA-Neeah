@@ -1,5 +1,0 @@
-*** Variables ***
-${entrance_neeah logo}    //img[@alt='Neeah Logo']
-${entrance_sign up with google button}    //label[@data-i18n="STR_LABEL_SIGN_UP_GOOGLE" and contains(text(),'Sign up with Google')]
-${entrance_sign up with email button}    //label[contains(text(),'Sign up with Email')]
-${entrance_login button}    //label[contains(text(),'Log In')]
