@@ -10,9 +10,9 @@ TM001_TC001_Verify Home page can be opened
     ...
     ...    + "GET STARTED TODAY" button
     ...
-    ...    + Sign up button
+    ...    + SignUp button
     ...
-    ...    + Sign in button
+    ...    + LogIn button
     [Tags]    sanity
     open cofiddle
     ${tc_flag}    Set Variable    False

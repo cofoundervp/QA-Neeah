@@ -52,36 +52,17 @@ TM001_TC020_verify user can sign up with Google account.
 test
     [Tags]    test
     [Setup]
-    open cofiddle
-    create account with email
-    Wait Until Element Is Visible    ${wj_welcome popup}
-    # close step 1 and step 2
-    Click Element    ${wj_close popup icon}
-    Click Element    ${wj_close popup icon}    # step 3 is shown after this step
-    Close Browser
-    # open gmail
-    open and login gmail in a new window    ${gb_gg_email}    ${gb_gg_password}
-    open gmail item with specific subject    ${gb_email subject text_Welcome to Cofiddle!}
-    ${tc_temp}    get text    //div/p[2]/a
-    Close Browser
-    Comment    open mailinator inbox    ${gb_email}
-    Comment    # click to open Welcome email
-    Comment    Click Element    //div[@class="innermail ng-binding" and contains(text(),'Welcome to Cofiddle!')]
-    Comment    # get the active URL in welcome email
-    Comment    Select Frame    id=publicshowmaildivcontent
-    Comment    ${tc_temp}    get text    //p[5]
-    Comment    Delete All Cookies
-    Comment    Close Browser
-    Open Browser    ${tc_temp}    gc
-    login    ${gb_email}    Abc123
-    Wait Until Element Is Visible    ${wj_new ftue popup_header}
-    # verify text of step 4
-    Element Text Should Be    ${wj_new ftue popup_header}    Congrats, easy right? Almost done
-    Element Text Should Be    ${wj_new ftue popup_ftue description}    Now open a new browser tab and visit your favorite website you will see the Cofiddle squirrel icon in the bottom right. Just click the squirrel and you can access on page highlighting, annotation, sharing and favoriting.
-    Element Should Be Visible    //img[@class="image-tour"]    # verify image is present, but we could not see the image is loaded or is corrected. Please do it manually
-    Capture Page Screenshot
-    Log    Please check the image is loaded correctly as design. We could not handle it by auto script    WARN
-    Element Should Be Visible    //input[@id="btnFtueAction" and @value="Try it now"]
+    Open Chrome with Extension    https://staging.neeah.cvp.io/app/signin
+    login    tu.duongcvp@gmail.com    Abc123
+
+*** Keywords ***
+Open Chrome with Extension
+    [Arguments]    ${url}
+    ${exclude_switches}     Create List     test-type
+    ${chrome_options}     Create Dictionary    excludeSwitches    ${exclude_switches}
+    ${capacities}     Create Dictionary     chromeOptions    ${chrome_options}
+    Create Webdriver     Chrome     desired_capabilities=${capacities}
+    Go To    ${url}﻿
 
 testtest
     Open Browser    google.com    gc
