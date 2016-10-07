@@ -92,6 +92,6 @@ Open Chrome with Extension
     ${exclude_switches}    Create List    test-type
     ${chrome_args}    Create List    disable-infobars
     ${chrome_options}    Create Dictionary    excludeSwitches=${exclude_switches}    args=${chrome_args}
-    ${capacities}    Create Dictionary    chromeOptions=${chrome_options}
-    Create Webdriver    Chrome    desired_capabilities=${capacities}
+    ${capabilities}    Create Dictionary    chromeOptions=${chrome_options}
+    Create Webdriver    Chrome    desired_capabilities=${capabilities}
     Go To    ${url}
