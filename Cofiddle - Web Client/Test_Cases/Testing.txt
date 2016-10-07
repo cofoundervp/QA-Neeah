@@ -84,4 +84,14 @@ test
     Element Should Be Visible    //input[@id="btnFtueAction" and @value="Try it now"]
 
 testtest
-    Open Browser    google.com    gc
+    Open Chrome with Extension    http://www.cofiddle.com
+
+*** Keywords ***
+Open Chrome with Extension
+    [Arguments]    ${url}
+    ${exclude_switches}    Create List    test-type
+    ${chrome_args}    Create List    disable-infobars
+    ${chrome_options}    Create Dictionary    excludeSwitches=${exclude_switches}    args=${chrome_args}
+    ${capacities}    Create Dictionary    chromeOptions=${chrome_options}
+    Create Webdriver    Chrome    desired_capabilities=${capacities}
+    Go To    ${url}
