@@ -12,7 +12,7 @@ Resource          ../Interfaces/settings_page.txt
 
 *** Keywords ***
 open cofiddle
-    Open Browser    http://${environment}.neeah.cvp.io/    gc
+    launch browser    http://${environment}.neeah.cvp.io/    ${gb_browser}
     Maximize Browser Window
 
 increase flag value
@@ -36,9 +36,7 @@ generate email
     [Return]    ${email}
 
 open cofiddle with extensions
-    ${options}    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver.chrome.options
-    Call Method    ${options}    add_argument    load-extension\=${extension build path}
-    Create Webdriver    Chrome    chrome_options=${options}
+    launch chrome with extension
     Go to    http://${environment}.neeah.cvp.io/
     Maximize Browser Window
 
@@ -90,7 +88,7 @@ logout
 
 open mailinator inbox
     [Arguments]    ${arg_email}
-    Open Browser    https://www.mailinator.com/    gc
+    launch browser    https://www.mailinator.com/    ${gb_browser}
     # input email to email field of mailinator
     Input Text    //input[@id="inboxfield"]    ${arg_email}
     # click Go button on mailinator
@@ -196,3 +194,12 @@ return true locator for text area of the first item
     ${gb_textfield_id}    Get Element Attribute    //textarea@id
     ${arg_wj_note and tag field}    Replace String    ${wj_note and tag field}    true_id    ${gb_textfield_id}
     [Return]    ${arg_wj_note and tag field}
+
+launch browser
+    [Arguments]    ${url}    ${browser name}
+    ${exclude_switches}    Create List    test-type
+    ${chrome_args}    Create List    disable-infobars
+    ${chrome_options}    Create Dictionary    excludeSwitches=${exclude_switches}    args=${chrome_args}
+    ${capabilities}    Create Dictionary    chromeOptions=${chrome_options}
+    Create Webdriver    ${browser name}    desired_capabilities=${capabilities}
+    Go To    ${url}

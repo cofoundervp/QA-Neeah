@@ -471,7 +471,7 @@ TM001_TC010_verify new FTUE step 4 show after clicking active URL in email
     Comment    ${tc_temp}    get text    //p[5]
     Comment    Delete All Cookies
     Comment    Close Browser
-    Open Browser    ${tc_temp}    gc
+    launch browser    ${tc_temp}    ${gb_browser}
     login    ${gb_email}    Abc123
     Wait Until Element Is Visible    ${wj_new ftue popup_header}
     # verify text of step 4

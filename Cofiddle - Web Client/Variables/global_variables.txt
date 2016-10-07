@@ -2,14 +2,14 @@
 ${CHECKPOINT_COUNT}    0
 ${environment}    staging
 ${extension build path}    E:\\4.GitHub\\QA-Neeah\\Cofiddle - Web Client\\Extension build
-${gb_email}       tu.duongcvp+7716@gmail.com
+${gb_email}       cofiddle.qa+2@gmail.com
 ${gb_password}    Abc123
 ${gb_gg_email}    cofiddle.qa@gmail.com
 ${gb_gg_password}    Cofiddle*123
 ${gb_first name}    ${EMPTY}
 ${gb_last name}    ${EMPTY}
 ${gb_changed password}    123Abc
-${gb_browser}     gc
+${gb_browser}     Chrome
 ${gb_gg_email id}    cofiddle.qa
 ${gb_email subject text_email address added}    Email address added
 ${gb_email subject text_Welcome to Cofiddle!}    Welcome to Cofiddle!

@@ -10,6 +10,7 @@ Resource          ../Interfaces/login_page.txt
 Resource          ../Interfaces/web_journal_page.txt
 Resource          ../Interfaces/settings_page.txt
 Resource          ../Interfaces/gmail.txt
+Resource          generals_keywords.txt
 
 *** Keywords ***
 open and login gmail in the same browser
@@ -48,7 +49,7 @@ get real locator of email subject
 
 open and login gmail in a new window
     [Arguments]    ${arg_gmail account}    ${arg_gmail password}
-    Open Browser    https://mail.google.com/    ${gb_browser}
+    launch browser    https://mail.google.com/    ${gb_browser}
     sleep    5s
     # check if gmail return page about.html, user must click Sign in button
     ${kw_temp}    Get Title

@@ -52,27 +52,18 @@ TM001_TC020_verify user can sign up with Google account.
 test
     [Tags]    test
     [Setup]
-    Open Chrome with Extension    https://staging.neeah.cvp.io/app/signin
+    Open Chrome with Extension    https://staging.neeah.cvp.io/app/signin    Chrome
     login    tu.duongcvp@gmail.com    Abc123
 
 *** Keywords ***
-Open Chrome with Extension
-    [Arguments]    ${url}
-    ${exclude_switches}     Create List     test-type
-    ${chrome_options}     Create Dictionary    excludeSwitches    ${exclude_switches}
-    ${capacities}     Create Dictionary     chromeOptions    ${chrome_options}
-    Create Webdriver     Chrome     desired_capabilities=${capacities}
-    Go To    ${url}﻿
-
 testtest
     Open Chrome with Extension    http://www.cofiddle.com
 
-*** Keywords ***
 Open Chrome with Extension
-    [Arguments]    ${url}
+    [Arguments]    ${url}    ${browser name}
     ${exclude_switches}    Create List    test-type
     ${chrome_args}    Create List    disable-infobars
     ${chrome_options}    Create Dictionary    excludeSwitches=${exclude_switches}    args=${chrome_args}
     ${capabilities}    Create Dictionary    chromeOptions=${chrome_options}
-    Create Webdriver    Chrome    desired_capabilities=${capabilities}
+    Create Webdriver    ${browser name}    desired_capabilities=${capabilities}
     Go To    ${url}
