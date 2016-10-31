@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel='stylesheet' href='css/alertify.core.css' />
+    <link rel='stylesheet' href='css/alertify.default.css' />
+    <link rel='stylesheet' href='css/bootstrap-tagsinput.css' />
+    <link rel='stylesheet' href='css/emojione.css' />
+    <link rel='stylesheet' href='css/font-awesome.css' />
+    <link rel='stylesheet' href='css/jquery-ui.css' />
+    <link rel='stylesheet' href='css/tooltipster.css' />
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <link href="css/user_info.css" rel="stylesheet" />
+    <link href="css/ftue.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans&subset=vietnamese,latin-ext' rel='stylesheet' type='text/css'>
+
+    <style>
+        .ui-menu .ui-menu-item a.ui-corner-all:hover, .ui-menu .ui-menu-item a.ui-corner-all:focus, .ui-menu .ui-menu-item a.ui-corner-all:active {
+            background: #F3894b !important;
+            color: #000;
+            border-radius: 0;
+        }
+
+        .ui-menu .ui-menu-item {
+            padding: 8px 3px 8px 3px !important;
+        }
+
+        .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+            background: #ddd;
+            border: none;
+            color: #000;
+            border-radius: 0;
+            font-weight: normal;
+            padding: 8px 3px 8px 3px !important;
+            opacity: 0.8;
+        }
+    </style>
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="script/jquery.js"></script>
+    <script src="script/alertify.min.js"></script>
+    <script src="script/bowser.js"></script>
+    <script src="script/emojione.js"></script>
+    <script src="script/i18next.js"></script>
+    <script src="script/jquery-ui.js"></script>
+    <script src="script/typeahead.bundle.js"></script>
+    <script src="script/jquery.tooltipster.min.js"></script>
+    <script src="script/sha1.min.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <script src="js/libs/UI.js"></script>
+    <script src="js/libs/config.js"></script>
+    <script src="js/libs/Cookie.js"></script>
+    <script src="js/libs/api.js"></script>
+    <script src="js/libs/User.js"></script>
+    <script src="js/libs/utils.js"></script>
+    <script src="js/libs/Document.js"></script>
+    <script src="js/libs/BlackList.js"></script>
+    <script src="js/SharePage.js"></script>
+</head>
+<body class="frame-share" >
+    <div style="display:none" id="share-user">
+        <!--intro share via email-->
+        <div id="support">
+            <div class="support-box">
+                <div class="support-title" data-i18n="[html]STR_FTUE_4_SHARE_VIA_EMAIL_1">
+                    Share via Email
+                </div>
+                <div class="support-content">
+                    <div class="support-content-1" data-i18n="[html]STR_FTUE_4_SHARE_VIA_EMAIL_2">
+                        Just type in your friends email addresses, add a message, and Share!
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="support-tour">
+                    <div class="skip-tour" data-i18n="STR_LABEL_SKIP_TOUR">
+                        Skip tour
+                    </div>
+                    <div class="step-by-tour">
+                        <div class="step-by-tour-box">
+                            <div class="step-tour-1 current-step"></div>
+                            <div class="step-tour-2 current-step"></div>
+                            <div class="step-tour-3 current-step"></div>
+                            <div class="step-tour-4 current-step"></div>
+                            <div class="step-tour-5 next-step"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="top: 70px; left: 424.5px;" id="popUpDiv">
+            <div class="main-dialog">
+                <div id="dialog-blanket"></div>
+                <div id="process">
+                    <img src="images/loading_icon.gif" width="30" style="vertical-align: middle;">
+                    <label style="vertical-align: middle;" data-i18n="STR_MSG_PROCESSING">Processing …</label>
+                </div>
+                <div class="logo_area">
+                    <div class="logo">
+                        <h1 data-i18n="STR_LABEL_SHARE">Share</h1>
+                    </div>
+
+                </div>
+                <div class="dialog">
+                    <form action="">
+                        <p class="email">
+                            <input type="text" name="email" data-i18n="[placeholder]STR_LABEL_EMAIL" placeholder="Email" id="email" data-role="tagsinput" style="display: none;">
+
+                            <div class="tagsEmailShare">
+                                <div id="listEmail">
+
+                                </div>
+                                <i class="fa fa-envelope"></i>
+                                <input type="text" placeholder="Email" id="txtEmailShare" >
+                            </div>
+                        </p>
+                        <p class="share-error" data-i18n="STR_ERR_INVALID_EMAIL">
+                            Email is not valid
+                        </p>
+                        <p class="password"><span class="fa fa-tag share"></span><input type="text" placeholder="Link" id="url" readonly></p>
+                        <p>
+                            <textarea id="message" class="dialog_message" data-i18n="[placeholder]STR_LABEL_ADD_MESSAGE" placeholder="Add message"></textarea>
+                        </p>
+                        <p class="share-markups" style="display:none">
+                            <input type="checkbox" id="shareMarkup" class="checkbox-custom" checked="checked">
+                            <label for="shareMarkup" class="checkbox-custom-markup"></label>
+                            <span>Show public markups</span>
+                        </p>
+                        <p class="share-button">
+                            <input type="button" class="neeah-btn-dialog" value="Share" data-i18n="[value]STR_LABEL_SHARE" id="btnShareURL">
+                            <input class="cancel neeah-btn-dialog" type="button" id="btnCancelShare" value="Cancel" data-i18n="[value]STR_LABEL_CANCEL">
+                        </p>
+                    </form>
+                    <p class="notice-share" id="lblUrlExitst"></p>
+                    <p class="notice-share" id="lblIsBlacklist"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

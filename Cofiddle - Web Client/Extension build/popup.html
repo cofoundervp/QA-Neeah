@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel='stylesheet' href='css/alertify.core.css' />
+    <link rel='stylesheet' href='css/alertify.default.css' />
+    <link rel='stylesheet' href='css/bootstrap-tagsinput.css' />
+    <link rel='stylesheet' href='css/emojione.css' />
+    <link rel='stylesheet' href='css/font-awesome.css' />
+    <link rel='stylesheet' href='css/jquery-ui.css' />
+    <link rel='stylesheet' href='css/tooltipster.css' />
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <link href="css/user_info.css" rel="stylesheet" />
+    <link href="css/tnd_social_share.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans&subset=vietnamese,latin-ext' rel='stylesheet' type='text/css'>
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="script/jquery.js"></script>
+    <script src="script/alertify.min.js"></script>
+    <script src="script/bowser.js"></script>
+    <script src="script/i18next.js"></script>
+    <script src="script/jquery-ui.js"></script>
+    <script src="script/jquery.tooltipster.min.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- injector:js -->
+    <script src="js/libs/BlackList.js"></script>
+    <script src="js/libs/Comment.js"></script>
+    <script src="js/libs/Cookie.js"></script>
+    <script src="js/libs/Document.js"></script>
+    <script src="js/libs/Search.js"></script>
+    <script src="js/libs/Tag.js"></script>
+    <script src="js/libs/UI.js"></script>
+    <script src="js/libs/User.js"></script>
+    <script src="js/libs/annotation.js"></script>
+    <script src="js/libs/api.js"></script>
+    <script src="js/libs/cache.js"></script>
+    <script src="js/libs/config.js"></script>
+    <script src="js/libs/utils.js"></script>
+    <!-- endinjector -->
+    <script src="js/popup.js" type="text/javascript"></script>
+</head>
+<body id="body_info">
+    <div class="popup-process">
+        <img src="images/icon_bk.png" />
+       <p>
+           <img src="images/loading_icon.gif">
+       </p>
+    </div>
+    <!-- <div class="user-popup">
+        <div class="search-bar">
+            <i class="fa fa-search fa-lg"></i>
+            <input type="text" id="txtSearchKey" autocomplete="off" placeholder="Search">
+        </div>
+    </div> -->
+    <div id="div_user">
+        <div class="user_icon">
+            <i class="fa fa-home fa-lg" id="iconProfile"></i>
+            <a style="cursor:pointer;color:black;text-decoration:none" id="btnProfile"><span id="username" class="user_left profile-name" ></span></a>
+        </div>
+        <div class="version_x2"></div>
+        <div id="menu_function" style="display:none">
+            <div class="user_icon">
+                <input type="text" class="search-text-input ui-autocomplete-input" id="txtSearchKey" autocomplete="off">
+                <div id="button-holder">
+                    <img src="images/search-icon.png">
+                </div>
+            </div>
+            <div class="version"></div>
+            <div class="user_icon">
+                <label style="vertical-align: middle; font-size: 0.85em;font-weight:bold" data-i18n="STR_LABEL_SEARCH_ALERT">Search Alert</label>
+                <input type="radio" name="search-alert" value="mini" id="mini" style="vertical-align: middle"/>
+                <label style="vertical-align: middle" data-i18n="STR_LABEL_MINI">Mini</label>
+                <input type="radio" name="search-alert" id="expand" value="expand" style="vertical-align: middle" />
+                <label style="vertical-align: middle" data-i18n="STR_LABEL_EXPANDED">Expanded</label>
+            </div>
+            <div class="version"></div>
+            <div class="user_icon">
+                <div style="display:inline" id="div_on">
+                    <div style="float: left; margin-left: 5px; margin-top: 3px;">
+                        <a style="color: #7FAC31; text-decoration: none" id="lbnStatus" data-i18n="STR_LABEL_PAUSED"></a>
+                        <div class="onoffswitch" style="margin-left: 121px; width: 85px; margin-top: -22px; ">
+                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
+                            <label class="onoffswitch-label" for="myonoffswitch">
+                                <span class="onoffswitch-inner">
+                                    <span class="onoffswitch-inactive"><i class="fa fa-play fa-2x" ></i><span class="onoffswitch-switch" data-i18n="STR_LABEL_ACTIVATE"></span></span>
+                                    <span class="onoffswitch-inactive" ><i class="fa fa-pause fa-2x"></i><span class="onoffswitch-switch" data-i18n="STR_LABEL_PAUSE"></span></span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- tungnd group share-->
+            <div class="strike">
+                <span data-i18n="STR_LABEL_SHARE_VIA">Share via</span>
+            </div>
+            <div id="groupSocialSahre">
+                <button class="tnd-icon-share user_SharePage" id="iconShareEmail">
+                	<i class="fa fa-envelope fa-1x"></i>
+                </button>
+                <button class="tnd-icon-share" id="iconShareFacebook" data-action="facebook">
+                	<i class="fa fa-facebook fa-1x"></i>
+                </button>
+                <button class="tnd-icon-share" id="iconShareTwitter" data-action="twitter">
+                	<i class="fa fa-twitter fa-1x"></i>
+                </button>
+            </div>
+
+            <!-- end tungnd group share-->
+
+            <div class="strike">
+                <span data-i18n="STR_LABEL_PAGE_NOTE">Page note</span>
+            </div>
+            <div>
+                <div id="lblUrlExitst" style="margin-left: 15px;margin-right: 15px; color: red; font-size: 0.85em;"></div>
+            </div>
+            <div id="pageNoteProcess" class="process" style="display:none">
+                <img src="images/loading_icon.gif" />
+            </div>
+            <div class="user_tagName">
+                <span class="label_note" id="lblNote" data-i18n="[html]STR_MSG_ADD_PAGE_NOTE_SUCCESS"></span>
+                <div class="page-note">
+                    <div class="note">
+                        <textarea placeholder="Add note" data-i18n="[placeholder]STR_LABEL_ADD_NOTE" id="txtNote" maxlength="140"></textarea>
+                    </div>
+                    <div>
+                        <label id="lblCount" class="count-word">140</label>
+                    </div>
+                </div>
+            </div>
+            <div class="strike">
+                <span data-i18n="STR_LABEL_TAGS">Tags</span>
+            </div>
+            <div class="user_tagName" id="divPageTags">
+                <div id="pagTagsProcess" class="process" style="margin-left: 90px; ">
+                    <img src="images/loading_icon.gif" />
+                </div>
+                <div id="currentTag" class="list-current-tag">
+
+                </div>
+                <div>
+                    <p class="notice-add-tag" data-i18n="STR_ERR_ONLY_LETTER_A_Z_NUMBER">Please use only letters (a-z), space, and numbers.</p>
+                    <p class="focus-add-tag" id="focus-tag"></p>
+                    <input type="text" value="" data-i18n="[placeholder]STR_LABEL_ADD_TAG" placeholder="Add tag" id="txtAddTags" class="bootstrap-tagsinput">
+                </div>
+            </div>
+
+            <div class="strike" style="display:none">
+                <span data-i18n="STR_LABEL_ACTIVE_TAGS"></span>
+            </div>
+            <div id="activeTagsProcess" class="process" style="display:none">
+                <img src="images/loading_icon.gif" />
+            </div>
+            <div class="user_tagName" id="divSesstionTags" style="display:none">
+                <input type="text" value="" data-i18n="[placeholder]STR_LABEL_ADD_TAG" placeholder="Add tag" id="txtTag" class="bootstrap-tagsinput">
+            </div>
+        </div>
+    </div>
+    <div style="margin-top:-240px;font-size:14px;margin-left:85px;display:none" id="divLogout" data-i18n="[html]STR_SIGN_OUT"></div>
+    <input type="hidden" id="isPostBack" value="0" />
+    <input type="hidden" id="isUpdate" value="0" />
+    <div id="div_message" style="z-index:9999;background-color:#fff;display:none;margin: 10px">
+        <p id="title" style="font-size:2em;margin: 0"></p>
+        <p id="message" style="margin-bottom: 25px;"></p>
+        <input type="button" value="Close" id="btnCloseMess" class="alertify-button" style="margin-left: 20%;"/>
+        <input type="hidden" id="idMessage" />
+    </div>
+</body>
+</html>
+<input type="hidden" id="isPostBack" value="0" />
+    <input type="hidden" id="isUpdate" value="0" />
+    <div id="div_message" style="z-index:9999;background-color:#fff;display:none;margin: 10px">
+        <p id="title" style="font-size:2em;margin: 0"></p>
+        <p id="message" style="margin-bottom: 25px;"></p>
+        <input type="button" value="Close" id="btnCloseMess" class="alertify-button" style="margin-left: 20%;"/>
+        <input type="hidden" id="idMessage" />
+    </div>
+</body>
+</html>

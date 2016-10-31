@@ -1,0 +1,126 @@
+{
+ "name": "__MSG_appName__",
+ "version": "2016.09.30.0",
+ "description": "__MSG_appDescription__",
+ "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAifz/NdbHA/D8oha0sCrljuuMGac7Zop6R0ixe9OYErZcxeDXLfT8xWIB8lB8pXEHomMrmvAMx3IghtwOl4Znc6h+A7VXaNbxhzsZ0qDgep+phnjnhZrYIPWmkXsTrv3WLkr0u2WCkO9BwW0hUDtfKufqLTMgQKPsUm2S07tGQ3ovCKSjNTPjrVLljvq0ZrPO12HqNJa6WYS25kHtEVqKyk7ktQUscB9BnrAnhUOSSxExsyknd64LsPdxV9tn6ZOs73hm+e1uFi5pExt4YwUPTzpygX8shQQC9EvJiL6FExe/ebm+xs3ddp/H+qalITAHhBdxxI03E4/hmjG+ikj8gwIDAQAB",
+ "background": {
+  "page": "background.html",
+  "js": "js/libs/Cookie.js"
+ },
+ "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "script/jquery.js",
+        "script/diff.js",
+        "js/pageCached.js",
+        "script/jquery-ui.min.js",
+        "js/contentscript.js",
+        "script/tooltipster.bundle.js",
+        "js/libs/config.js",
+        "script/jquery.textavatar.js",
+        "script/emojione.min.js",
+        "js/libs/Cookie.js",
+        "js/libs/utils.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "*://*.neeah.cvp.io/*",
+        "*://*.neeah.io/*",
+        "*://*.cofiddle.com/*",
+        "*://*.facebook.com/*",
+        "*://*.github.com/*",
+        "*://login.yahoo.com/*",
+        "*://mail.yahoo.com/*",
+        "*://*.twitter.com/*",
+        "*://localhost/*",
+        "*://outlook.office.com/*",
+        "*://*.google.com/*",
+        "*://*.google.com.vn/*",
+        "*://*.trello.com/*",
+        "*://jsoneditoronline.org/*",
+        "*://cofoundervp-my.sharepoint.com/*",
+        "*://semantic-ui.com/*",
+        "*://jira.cvp.io/*",
+        "*://annotatorjs.org/*",
+        "*://*.linkedin.com/*",
+        "*://search.yahoo.com/*",
+        "*://*.baidu.com/*",
+        "*://*.bing.com/*",
+        "*://*.ask.com/*",
+        "*://search.aol.com/*",
+        "*://*.yandex.com/*",
+        "*://login.skype.com/*",
+        "*://web.skype.com/*"
+      ],
+      "js": [
+        "js/hub/html.js",
+        "js/hub/guide.js",
+        "js/annotator-full.min.js",
+        "js/annotator.js"
+      ],
+      "css": [
+        "css/guide.css",
+        "css/tooltipster.bundle.css",
+        "css/font-awesome.min.css",
+        "css/OpenSans.css",
+        "css/annotator.min.css"
+      ],
+      "run_at": "document_end"
+    }
+ ],
+ "default_locale": "en",
+ "icons": {
+  "16": "images/neeah-icon-normal.png",
+  "48": "images/neeah-icon-normal.png",
+  "128": "images/neeah-icon-normal.png"
+ },
+ "permissions": [
+  "idle",
+  "pageCapture",
+  "history",
+  "tabs",
+  "webNavigation",
+  "http://*/*",
+  "https://*/*",
+  "activeTab",
+  "storage",
+  "unlimitedStorage",
+  "cookies",
+  "https://*.google.com/*",
+  "https://accounts.google.com/*",
+  "https://www.googleapis.com/*"
+ ],
+ "content_security_policy": "script-src 'self' https://*.segment.com https://*.mxpnl.com https://d2wy8f7a9ursnm.cloudfront.net/ ; object-src 'self'",
+ "browser_action": {
+  "default_title": "Go to Cofiddle",
+  "default_icon": "images/neeah-icon-paused.png"
+ },
+ "web_accessible_resources": [
+  "background.html",
+  "sharePage.html",
+  "interceptSearch.html",
+  "inviteUser.html",
+  "fonts/*",
+  "images/c2.cur"
+ ],
+ "externally_connectable": {
+  "matches": [
+    "*://neeah.io/*",
+    "*://dev.neeah.cvp.io/*",
+    "*://staging.neeah.cvp.io/*",
+    "*://www.cofiddle.com/*"
+  ]
+ },
+ "manifest_version": 2,
+ "short_name": "__MSG_appName__"
+}

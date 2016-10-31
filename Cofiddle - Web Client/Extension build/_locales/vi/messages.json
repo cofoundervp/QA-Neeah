@@ -1,0 +1,13 @@
+{
+  "appName": {
+    "message": "Tiện ích web Cofiddle",
+    "description": "Tiện ích web Cofiddle"
+  },
+  "appShortName": {
+	"message": "Cofiddle"
+  },
+  "appDescription": {
+    "message": "Cofiddle is the easiest way to highlight, annotate and share cool web finds!",
+    "description": "Cofiddle is the easiest way to highlight, annotate and share cool web finds!"
+  }
+}

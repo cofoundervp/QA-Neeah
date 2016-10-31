@@ -1,0 +1,13 @@
+{
+  "appName": {
+    "message": "Cofiddle Web Extension",
+    "description": "Cofiddle Web Extension"
+  },
+  "appShortName": {
+	"message": "Cofiddle Web Extension"
+  },
+  "appDescription": {
+    "message": "Cofiddle is the easiest way to highlight, annotate and share cool web finds!",
+    "description": "Cofiddle is the easiest way to highlight, annotate and share cool web finds!"
+  }
+}
