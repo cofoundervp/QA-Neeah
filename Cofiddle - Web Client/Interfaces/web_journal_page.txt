@@ -21,3 +21,4 @@ ${wj_first item domain}    //div[@class="item domain"]
 ${wj_note and tag field}    //textarea[@id="true_id"]
 ${wj_dynamic_the first tag of the first item}    //span[@class="tooltip" and contains(text(),"${gb_sample tag name}")]
 ${wj_the first item locator}    //div[@class="row list-view"]    # This is the locator of full item that including picture, header, other elements
+${wj_favorite_icon}    //i[@class="fa fa-star fa-hafl-size"]
