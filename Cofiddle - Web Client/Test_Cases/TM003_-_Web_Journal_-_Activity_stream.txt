@@ -52,3 +52,32 @@ TM003_TC004_Verify all favorite articles display in Favorites tab
     #get number of items on Favorites tab
     ${item count}    Get Matching Xpath Count    ${wj_the first item locator}
     Should Be Equal    ${item count}    1    Number of items are not matched
+
+TM003_TC011_Verify user can switch between List view and Timeline view.
+    [Tags]    sanity
+    [Setup]    setup browser with extension_create account_close all ftue
+    ${number of items after signing up}    Get Matching Xpath Count    ${wj_the first item locator}
+    Should Be Equal    ${number of items after signing up}    0
+    open settings page
+    go to setting's sub-page    Web Journal
+    enable auto web journal and auto cache
+    # open url 1 in the current tab    ${
+    Go To    ${gb_sample_url_1}
+    Sleep    5s
+    # open url 2 in the current tab
+    Go To    ${gb_sample url 2}
+    Sleep    5s
+    # open url 3 in the current tab
+    Go To    ${gb_sample_url_3}
+    Sleep    5s
+    # go back to cofiddle
+    go to coffidle
+    # switch to timeline view
+    Click Element    ${wj_timeline view}
+    sleep    5s
+    # check if there is a dropdown button
+    Element Should Be Visible    ${wj_dropdown button}
+    # switch back to list view
+    Click Element    ${wj_list view}
+    # check if the dropdown button is disappear
+    Element Should Not Be Visible    ${wj_dropdown button}
